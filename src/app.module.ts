@@ -5,6 +5,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { Product } from './products/products.model';
 import { ProductsModule } from './products/products.module';
+import { ProductCharacteristicModule } from './product-characteristic/product-characteristic.module';
+import { ProductCharacteristic } from './product-characteristic/product-characteristic.model';
 
 @Module({
   controllers: [AppController],
@@ -20,10 +22,11 @@ import { ProductsModule } from './products/products.module';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      models: [Product],
+      models: [Product, ProductCharacteristic],
       autoLoadModels: true,
     }),
     ProductsModule,
+    ProductCharacteristicModule,
   ],
 })
 export class AppModule {}

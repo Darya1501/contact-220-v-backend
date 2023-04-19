@@ -1,5 +1,6 @@
+import { ProductCharacteristic } from './../product-characteristic/product-characteristic.model';
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, Table, Model, DataType } from 'sequelize-typescript';
+import { Column, Table, Model, DataType, HasMany } from 'sequelize-typescript';
 
 interface ProductCreationAttrs {
   title: string;
@@ -25,4 +26,7 @@ export class Product extends Model<Product, ProductCreationAttrs> {
     allowNull: false,
   })
   title: string;
+
+  @HasMany(() => ProductCharacteristic)
+  characteristics: ProductCharacteristic[];
 }
