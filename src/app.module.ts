@@ -11,6 +11,8 @@ import { ServiceCategoryModule } from './service-category/service-category.modul
 import { ServiceCategory } from './service-category/service-category.model';
 import { ServicesModule } from './services/services.module';
 import { Service } from './services/sevices.model';
+import { ProductVariantsModule } from './product-variants/product-variants.module';
+import { ProductVariant } from './product-variants/product-variants.model';
 
 @Module({
   controllers: [],
@@ -29,6 +31,7 @@ import { Service } from './services/sevices.model';
       models: [
         Product,
         ProductCharacteristic,
+        ProductVariant,
         ProductCategory,
         Service,
         ServiceCategory,
@@ -40,6 +43,7 @@ import { Service } from './services/sevices.model';
     ProductCategoryModule,
     ServiceCategoryModule,
     ServicesModule,
+    ProductVariantsModule,
   ],
 })
 export class AppModule {}

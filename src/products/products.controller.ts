@@ -16,7 +16,7 @@ export class ProductsController {
     return this.productsService.createProduct(productDRO);
   }
 
-  @ApiOperation({ summary: 'Получение всех пользователей' })
+  @ApiOperation({ summary: 'Получение всех товаров' })
   @ApiResponse({ status: 200, type: [Product] })
   @Get()
   getAll() {

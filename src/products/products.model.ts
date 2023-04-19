@@ -1,3 +1,4 @@
+import { ProductVariant } from './../product-variants/product-variants.model';
 import { ProductCharacteristic } from './../product-characteristic/product-characteristic.model';
 import { ApiProperty } from '@nestjs/swagger';
 import {
@@ -42,6 +43,9 @@ export class Product extends Model<Product, ProductCreationAttrs> {
 
   @HasMany(() => ProductCharacteristic)
   characteristics: ProductCharacteristic[];
+
+  @HasMany(() => ProductVariant)
+  variants: ProductVariant[];
 
   @BelongsTo(() => ProductCategory)
   category: ProductCategory;
