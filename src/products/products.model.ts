@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Column, Table, Model, DataType } from 'sequelize-typescript';
 
 interface ProductCreationAttrs {
@@ -6,6 +7,7 @@ interface ProductCreationAttrs {
 
 @Table({ tableName: 'products' })
 export class Product extends Model<Product, ProductCreationAttrs> {
+  @ApiProperty({ example: '1', description: 'Уникальный идентификатор' })
   @Column({
     type: DataType.INTEGER,
     unique: true,
@@ -14,6 +16,10 @@ export class Product extends Model<Product, ProductCreationAttrs> {
   })
   id: number;
 
+  @ApiProperty({
+    example: 'Нагревательный кабель "Green Box"',
+    description: 'Название товара',
+  })
   @Column({
     type: DataType.STRING,
     allowNull: false,
