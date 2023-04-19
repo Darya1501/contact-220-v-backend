@@ -7,6 +7,10 @@ import { ProductsModule } from './products/products.module';
 import { ProductCharacteristicModule } from './product-characteristic/product-characteristic.module';
 import { ProductCharacteristic } from './product-characteristic/product-characteristic.model';
 import { ProductCategoryModule } from './product-category/product-category.module';
+import { ServiceCategoryModule } from './service-category/service-category.module';
+import { ServiceCategory } from './service-category/service-category.model';
+import { ServicesModule } from './services/services.module';
+import { Service } from './services/sevices.model';
 
 @Module({
   controllers: [],
@@ -22,12 +26,20 @@ import { ProductCategoryModule } from './product-category/product-category.modul
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      models: [Product, ProductCharacteristic, ProductCategory],
+      models: [
+        Product,
+        ProductCharacteristic,
+        ProductCategory,
+        Service,
+        ServiceCategory,
+      ],
       autoLoadModels: true,
     }),
     ProductsModule,
     ProductCharacteristicModule,
     ProductCategoryModule,
+    ServiceCategoryModule,
+    ServicesModule,
   ],
 })
 export class AppModule {}
