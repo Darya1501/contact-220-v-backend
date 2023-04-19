@@ -14,7 +14,7 @@ interface ProductCharacteristicCreationAttrs {
   value: string;
 }
 
-@Table({ tableName: 'product_characteristic' })
+@Table({ tableName: 'product_characteristics' })
 export class ProductCharacteristic extends Model<
   ProductCharacteristic,
   ProductCharacteristicCreationAttrs

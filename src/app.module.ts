@@ -1,16 +1,16 @@
+import { ProductCategory } from './product-category/product-category.model';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { Product } from './products/products.model';
 import { ProductsModule } from './products/products.module';
 import { ProductCharacteristicModule } from './product-characteristic/product-characteristic.module';
 import { ProductCharacteristic } from './product-characteristic/product-characteristic.model';
+import { ProductCategoryModule } from './product-category/product-category.module';
 
 @Module({
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
   imports: [
     ConfigModule.forRoot({
       envFilePath: `.${process.env.NODE_ENV}.env`,
@@ -22,11 +22,12 @@ import { ProductCharacteristic } from './product-characteristic/product-characte
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      models: [Product, ProductCharacteristic],
+      models: [Product, ProductCharacteristic, ProductCategory],
       autoLoadModels: true,
     }),
     ProductsModule,
     ProductCharacteristicModule,
+    ProductCategoryModule,
   ],
 })
 export class AppModule {}
