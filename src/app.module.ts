@@ -13,11 +13,14 @@ import { ServicesModule } from './services/services.module';
 import { Service } from './services/sevices.model';
 import { ProductVariantsModule } from './product-variants/product-variants.module';
 import { ProductVariant } from './product-variants/product-variants.model';
+import { SbisModule } from './sbis/sbis.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   controllers: [],
   providers: [],
   imports: [
+    ScheduleModule.forRoot(),
     ConfigModule.forRoot({
       envFilePath: `.${process.env.NODE_ENV}.env`,
     }),
@@ -37,6 +40,7 @@ import { ProductVariant } from './product-variants/product-variants.model';
         ServiceCategory,
       ],
       autoLoadModels: true,
+      // sync: { force: true },
     }),
     ProductsModule,
     ProductCharacteristicModule,
@@ -44,6 +48,7 @@ import { ProductVariant } from './product-variants/product-variants.model';
     ServiceCategoryModule,
     ServicesModule,
     ProductVariantsModule,
+    SbisModule,
   ],
 })
 export class AppModule {}

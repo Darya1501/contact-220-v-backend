@@ -31,6 +31,17 @@ export class ProductCategory extends Model<
   })
   title: string;
 
+  @ApiProperty({
+    example: 1,
+    description: 'Внешний ключ интегрируемых сервисов',
+  })
+  @Column({
+    type: DataType.STRING,
+    unique: true,
+    allowNull: true,
+  })
+  externalId: string;
+
   @HasMany(() => Product)
   products: Product[];
 }

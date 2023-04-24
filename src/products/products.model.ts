@@ -37,6 +37,17 @@ export class Product extends Model<Product, ProductCreationAttrs> {
   })
   title: string;
 
+  @ApiProperty({
+    example: '1',
+    description: 'Внешний ключ интегрируемых сервисов',
+  })
+  @Column({
+    type: DataType.STRING,
+    unique: true,
+    allowNull: true,
+  })
+  externalId: string;
+
   @ForeignKey(() => ProductCategory)
   @Column({ type: DataType.INTEGER })
   categoryId: number;

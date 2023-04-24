@@ -66,6 +66,17 @@ export class ProductVariant extends Model<
   })
   image: string;
 
+  @ApiProperty({
+    example: 1,
+    description: 'Внешний ключ интегрируемых сервисов',
+  })
+  @Column({
+    type: DataType.INTEGER,
+    unique: true,
+    allowNull: true,
+  })
+  externalId: string;
+
   @ApiProperty({ example: 1, description: 'ID товара' })
   @ForeignKey(() => Product)
   @Column({ type: DataType.INTEGER })
