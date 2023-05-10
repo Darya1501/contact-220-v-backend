@@ -29,6 +29,8 @@ export class ProductsService {
       defaults: dto,
     });
 
+    console.log('created: ', created);
+
     // if (!created) {
     //   if (product.dataValues.title !== dto.title) product.title = dto.title;
     //   if (product.dataValues.categoryId !== dto.categoryId)

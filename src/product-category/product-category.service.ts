@@ -8,22 +8,22 @@ import { ImportProductCategoryDTO } from './dto/import-product-category.dto';
 export class ProductCategoryService {
   constructor(
     @InjectModel(ProductCategory)
-    private productCategoryRepositiry: typeof ProductCategory,
+    private productCategoryRepository: typeof ProductCategory,
   ) {}
 
   async create(dto: CreateProductCategoryDTO) {
-    const category = await this.productCategoryRepositiry.create(dto);
+    const category = await this.productCategoryRepository.create(dto);
     return category;
   }
 
   async getAll() {
-    const categories = await this.productCategoryRepositiry.findAll();
+    const categories = await this.productCategoryRepository.findAll();
     return categories;
   }
 
   async import(dto: ImportProductCategoryDTO) {
     const [category, created] =
-      await this.productCategoryRepositiry.findOrCreate({
+      await this.productCategoryRepository.findOrCreate({
         where: { externalId: dto.externalId },
         defaults: dto,
       });

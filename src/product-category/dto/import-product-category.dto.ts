@@ -12,4 +12,10 @@ export class ImportProductCategoryDTO {
     description: 'Внешний ключ интегрируемых сервисов',
   })
   readonly externalId: string;
+
+  @ApiProperty({
+    example: 1,
+    description: 'Id родительской категории',
+  })
+  readonly parentId: number | null;
 }

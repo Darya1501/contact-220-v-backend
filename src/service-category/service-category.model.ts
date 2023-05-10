@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Column, Table, Model, DataType, HasMany } from 'sequelize-typescript';
-import { Service } from 'src/services/sevices.model';
+import { Service } from 'src/services/services.model';
 
 interface ServiceCategoryCreationAttrs {
   title: string;

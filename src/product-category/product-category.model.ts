@@ -1,5 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, Table, Model, DataType, HasMany } from 'sequelize-typescript';
+import {
+  Column,
+  Table,
+  Model,
+  DataType,
+  HasMany,
+  ForeignKey,
+} from 'sequelize-typescript';
 import { Product } from 'src/products/products.model';
 
 interface ProductCategoryCreationAttrs {
@@ -33,12 +40,21 @@ export class ProductCategory extends Model<
 
   @ApiProperty({
     example: 1,
+    description: 'ID родительской категории',
+  })
+  @Column({
+    type: DataType.INTEGER,
+  })
+  @ForeignKey(() => ProductCategory)
+  parentId: number;
+
+  @ApiProperty({
+    example: 1,
     description: 'Внешний ключ интегрируемых сервисов',
   })
   @Column({
     type: DataType.STRING,
     unique: true,
-    allowNull: true,
   })
   externalId: string;
 

@@ -67,13 +67,31 @@ export class ProductVariant extends Model<
   image: string;
 
   @ApiProperty({
+    example: 'Some string...',
+    description: 'Описание товара',
+  })
+  @Column({
+    type: DataType.STRING(4096),
+  })
+  description: string;
+
+  @ApiProperty({
+    example: 15,
+    description: 'Количество товара на складе',
+  })
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+  })
+  count: number;
+
+  @ApiProperty({
     example: 1,
     description: 'Внешний ключ интегрируемых сервисов',
   })
   @Column({
     type: DataType.INTEGER,
     unique: true,
-    allowNull: true,
   })
   externalId: string;
 

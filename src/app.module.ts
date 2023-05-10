@@ -10,11 +10,12 @@ import { ProductCategoryModule } from './product-category/product-category.modul
 import { ServiceCategoryModule } from './service-category/service-category.module';
 import { ServiceCategory } from './service-category/service-category.model';
 import { ServicesModule } from './services/services.module';
-import { Service } from './services/sevices.model';
+import { Service } from './services/services.model';
 import { ProductVariantsModule } from './product-variants/product-variants.module';
 import { ProductVariant } from './product-variants/product-variants.model';
 import { SbisModule } from './sbis/sbis.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { MoyskladModule } from './moysklad/moysklad.module';
 
 @Module({
   controllers: [],
@@ -49,6 +50,7 @@ import { ScheduleModule } from '@nestjs/schedule';
     ServicesModule,
     ProductVariantsModule,
     SbisModule,
+    MoyskladModule,
   ],
 })
 export class AppModule {}

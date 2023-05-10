@@ -1,6 +1,6 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
-import { Cron } from '@nestjs/schedule';
+// import { Cron } from '@nestjs/schedule';
 import { AxiosError } from 'axios';
 import { catchError, firstValueFrom } from 'rxjs';
 import { ProductCategoryService } from 'src/product-category/product-category.service';
@@ -59,6 +59,7 @@ export class SbisService {
       const currentCategory = await this.productCategoryService.import({
         title: category.name,
         externalId: category.description,
+        parentId: null,
       });
 
       products.forEach(async (product) => {

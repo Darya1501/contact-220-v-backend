@@ -44,7 +44,6 @@ export class Product extends Model<Product, ProductCreationAttrs> {
   @Column({
     type: DataType.STRING,
     unique: true,
-    allowNull: true,
   })
   externalId: string;
 
