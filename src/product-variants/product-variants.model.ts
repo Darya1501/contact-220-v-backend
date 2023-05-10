@@ -7,7 +7,10 @@ import {
   DataType,
   ForeignKey,
   BelongsTo,
+  HasMany,
 } from 'sequelize-typescript';
+import { ProductCharacteristic } from 'src/product-characteristic/product-characteristic.model';
+import { SOURCE_CODE } from 'src/utils/constants';
 
 interface ProductVariantCreationAttrs {
   title: string;
@@ -27,30 +30,22 @@ export class ProductVariant extends Model<
   })
   id: number;
 
-  @ApiProperty({
-    example: '2206125',
-    description: 'Артикул товара',
-  })
+  @ApiProperty({ example: '2206125', description: 'Артикул товара' })
   @Column({
     type: DataType.STRING,
     allowNull: false,
+    unique: true,
   })
   article: string;
 
-  @ApiProperty({
-    example: '180 Вт/1,0 кв.м',
-    description: 'Название варианта товара',
-  })
+  @ApiProperty({ example: '25 A', description: 'Название варианта товара' })
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
   title: string;
 
-  @ApiProperty({
-    example: 6926,
-    description: 'Стоимость варианта товара',
-  })
+  @ApiProperty({ example: 6926, description: 'Стоимость варианта товара' })
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
@@ -66,22 +61,17 @@ export class ProductVariant extends Model<
   })
   image: string;
 
-  @ApiProperty({
-    example: 'Some string...',
-    description: 'Описание товара',
-  })
+  @ApiProperty({ example: 'Some string...', description: 'Описание товара' })
   @Column({
     type: DataType.STRING(4096),
   })
   description: string;
 
-  @ApiProperty({
-    example: 15,
-    description: 'Количество товара на складе',
-  })
+  @ApiProperty({ example: 15, description: 'Количество товара на складе' })
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
+    defaultValue: 0,
   })
   count: number;
 
@@ -90,7 +80,7 @@ export class ProductVariant extends Model<
     description: 'Внешний ключ интегрируемых сервисов',
   })
   @Column({
-    type: DataType.INTEGER,
+    type: DataType.STRING,
     unique: true,
   })
   externalId: string;
@@ -99,6 +89,21 @@ export class ProductVariant extends Model<
   @ForeignKey(() => Product)
   @Column({ type: DataType.INTEGER })
   productId: number;
+
+  @Column({
+    type: DataType.INTEGER,
+    defaultValue: SOURCE_CODE.INTERNAL,
+  })
+  source: SOURCE_CODE;
+
+  @Column({
+    type: DataType.BOOLEAN,
+    defaultValue: false,
+  })
+  mustBeRemoved: boolean;
+
+  @HasMany(() => ProductCharacteristic)
+  characteristics: ProductCharacteristic[];
 
   @BelongsTo(() => Product)
   product: Product;

@@ -7,7 +7,7 @@ import {
   BelongsTo,
   ForeignKey,
 } from 'sequelize-typescript';
-import { Product } from 'src/products/products.model';
+import { ProductVariant } from 'src/product-variants/product-variants.model';
 
 interface ProductCharacteristicCreationAttrs {
   title: string;
@@ -48,10 +48,10 @@ export class ProductCharacteristic extends Model<
   })
   value: string;
 
-  @ForeignKey(() => Product)
+  @ForeignKey(() => ProductVariant)
   @Column({ type: DataType.INTEGER })
-  productId: number;
+  variantId: number;
 
-  @BelongsTo(() => Product)
-  product: Product;
+  @BelongsTo(() => ProductVariant)
+  productVariant: ProductVariant;
 }

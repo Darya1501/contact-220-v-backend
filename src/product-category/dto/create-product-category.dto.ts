@@ -6,4 +6,7 @@ export class CreateProductCategoryDTO {
     description: 'Название категории',
   })
   readonly title: string;
+
+  @ApiProperty({ example: 1, description: 'ID родительской категории' })
+  readonly parentId: number | null;
 }

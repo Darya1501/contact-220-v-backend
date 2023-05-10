@@ -1,5 +1,4 @@
 import { ProductVariant } from './../product-variants/product-variants.model';
-import { ProductCharacteristic } from './../product-characteristic/product-characteristic.model';
 import { ApiProperty } from '@nestjs/swagger';
 import {
   Column,
@@ -11,6 +10,7 @@ import {
   BelongsTo,
 } from 'sequelize-typescript';
 import { ProductCategory } from 'src/product-category/product-category.model';
+import { SOURCE_CODE } from 'src/utils/constants';
 
 interface ProductCreationAttrs {
   title: string;
@@ -47,12 +47,22 @@ export class Product extends Model<Product, ProductCreationAttrs> {
   })
   externalId: string;
 
+  @Column({
+    type: DataType.INTEGER,
+    defaultValue: SOURCE_CODE.INTERNAL,
+  })
+  source: SOURCE_CODE;
+
+  @Column({
+    type: DataType.BOOLEAN,
+    defaultValue: false,
+  })
+  mustBeRemoved: boolean;
+
+  @ApiProperty({ example: 1, description: 'ID категории' })
   @ForeignKey(() => ProductCategory)
   @Column({ type: DataType.INTEGER })
   categoryId: number;
-
-  @HasMany(() => ProductCharacteristic)
-  characteristics: ProductCharacteristic[];
 
   @HasMany(() => ProductVariant)
   variants: ProductVariant[];

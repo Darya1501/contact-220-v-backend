@@ -8,6 +8,7 @@ import {
   ForeignKey,
 } from 'sequelize-typescript';
 import { Product } from 'src/products/products.model';
+import { SOURCE_CODE } from 'src/utils/constants';
 
 interface ProductCategoryCreationAttrs {
   title: string;
@@ -33,18 +34,12 @@ export class ProductCategory extends Model<
   })
   @Column({
     type: DataType.STRING,
-    unique: true,
     allowNull: false,
   })
   title: string;
 
-  @ApiProperty({
-    example: 1,
-    description: 'ID родительской категории',
-  })
-  @Column({
-    type: DataType.INTEGER,
-  })
+  @ApiProperty({ example: 1, description: 'ID родительской категории' })
+  @Column({ type: DataType.INTEGER })
   @ForeignKey(() => ProductCategory)
   parentId: number;
 
@@ -57,6 +52,18 @@ export class ProductCategory extends Model<
     unique: true,
   })
   externalId: string;
+
+  @Column({
+    type: DataType.INTEGER,
+    defaultValue: SOURCE_CODE.INTERNAL,
+  })
+  source: SOURCE_CODE;
+
+  @Column({
+    type: DataType.BOOLEAN,
+    defaultValue: false,
+  })
+  mustBeRemoved: boolean;
 
   @HasMany(() => Product)
   products: Product[];

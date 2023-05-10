@@ -1,12 +1,13 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
-import { Cron, CronExpression } from '@nestjs/schedule';
+import { Cron } from '@nestjs/schedule';
 import { AxiosError } from 'axios';
 import { firstValueFrom, catchError } from 'rxjs';
-import { sleep } from 'src/functions/sleep';
+import { sleep } from 'src/utils/functions';
 import { ProductCategoryService } from 'src/product-category/product-category.service';
 import { ProductsService } from 'src/products/products.service';
 import { MoyskladFolder, NomenclatureItem } from './moysklad.types';
+import { SOURCE_CODE } from 'src/utils/constants';
 
 @Injectable()
 export class MoyskladService {
@@ -48,6 +49,7 @@ export class MoyskladService {
         title,
         externalId: id,
         categoryId: parentId,
+        source: SOURCE_CODE.MOYSKLAD,
       });
       return product.id;
     }
@@ -58,6 +60,7 @@ export class MoyskladService {
         title,
         externalId: id,
         parentId,
+        source: SOURCE_CODE.MOYSKLAD,
       });
       return category.id;
     } else {
@@ -65,12 +68,13 @@ export class MoyskladService {
         title,
         externalId: id,
         parentId: null,
+        source: SOURCE_CODE.MOYSKLAD,
       });
       return category.id;
     }
   }
 
-  @Cron('55 * * * * *')
+  // @Cron('55 * * * * *')
   async getAssortment() {
     console.log('cron working');
     const {
@@ -97,7 +101,6 @@ export class MoyskladService {
 
     const variants = [];
     const products = [];
-    const categories = [];
 
     rows.forEach(async (element: NomenclatureItem) => {
       variants.push(element.name);
@@ -111,61 +114,5 @@ export class MoyskladService {
 
       await sleep(1000);
     });
-
-    // console.log('variants: ', variants);
-
-    // const categories = [];
-
-    // rows.forEach(async (row) => {
-    //   const pathData = row.pathName.split('/');
-    //   pathData.shift();
-    //   const currentProductName = pathData.pop();
-
-    //   let lastCategoryId: number | null = null;
-
-    //   pathData.forEach(async (data) => {
-    //     if (!categories.find((category) => category === data)) {
-    //       const currentCategory = await this.productCategoryService.import({
-    //         title: data,
-    //         externalId: '',
-    //         parentId: lastCategoryId,
-    //       });
-    //       lastCategoryId = currentCategory.id;
-    //       categories.push(currentProductName);
-    //     }
-    //   });
-
-    //   const currentVariant = row.name.replace(currentProductName, '');
-    // });
-    // const categories = [];
-    // const products = [];
-    // const variants = [];
-
-    // nomenclatures.forEach((element) => {
-    //   if (!element.hierarchicalParent) {
-    //     categories.push(element);
-    //   } else if (!element.article) {
-    //     products.push(element);
-    //   } else {
-    //     variants.push(element);
-    //   }
-    // });
-
-    //   categories.forEach(async (category) => {
-    //     const currentCategory = await this.productCategoryService.import({
-    //       title: category.name,
-    //       externalId: category.description,
-    //     });
-
-    //     products.forEach(async (product) => {
-    //       if (product.hierarchicalParent === category.hierarchicalId) {
-    //         await this.productsService.import({
-    //           title: product.name,
-    //           categoryId: currentCategory.id,
-    //           externalId: product.description,
-    //         });
-    //       }
-    //     });
-    //   });
   }
 }

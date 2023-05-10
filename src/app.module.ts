@@ -13,7 +13,6 @@ import { ServicesModule } from './services/services.module';
 import { Service } from './services/services.model';
 import { ProductVariantsModule } from './product-variants/product-variants.module';
 import { ProductVariant } from './product-variants/product-variants.model';
-import { SbisModule } from './sbis/sbis.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { MoyskladModule } from './moysklad/moysklad.module';
 
@@ -49,7 +48,6 @@ import { MoyskladModule } from './moysklad/moysklad.module';
     ServiceCategoryModule,
     ServicesModule,
     ProductVariantsModule,
-    SbisModule,
     MoyskladModule,
   ],
 })

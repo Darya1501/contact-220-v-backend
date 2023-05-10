@@ -23,20 +23,17 @@ export class ProductsService {
   }
 
   async import(dto: ImportProductDTO) {
-    console.log('dto: ', dto);
     const [product, created] = await this.productRepository.findOrCreate({
       where: { externalId: dto.externalId },
       defaults: dto,
     });
 
-    console.log('created: ', created);
-
-    // if (!created) {
-    //   if (product.dataValues.title !== dto.title) product.title = dto.title;
-    //   if (product.dataValues.categoryId !== dto.categoryId)
-    //     product.categoryId = dto.categoryId;
-    //   product.save();
-    // }
+    if (!created) {
+      if (product.dataValues.title !== dto.title) product.title = dto.title;
+      if (product.dataValues.categoryId !== dto.categoryId)
+        product.categoryId = dto.categoryId;
+      product.save();
+    }
 
     return product;
   }
