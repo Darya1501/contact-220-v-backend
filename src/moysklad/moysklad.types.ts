@@ -23,7 +23,7 @@ export interface NomenclatureItem {
   uom: any; // единицы измерения
   images: any; // TODO: заменить тип
   minPrice: { value: number };
-  salePrices: { value: number };
+  salePrices: { value: number }[];
   buyPrice: { value: number };
   paymentItemType: string;
   discountProhibited: boolean;
@@ -38,6 +38,7 @@ export interface NomenclatureItem {
   reserve: number; // резерв
   inTransit: number; // ожидание
   quantity: number; // доступно
+  description?: string;
 }
 
 export interface MoyskladFolder {

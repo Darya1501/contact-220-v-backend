@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Product } from './products.model';
 import { ImportProductDTO } from './dto/import-product.dto';
+import { SOURCE_CODE } from 'src/utils/constants';
 
 @Injectable()
 export class ProductsService {
@@ -22,6 +23,13 @@ export class ProductsService {
     return products;
   }
 
+  async findByExternalId(externalId: string) {
+    const product = await this.productRepository.findOne({
+      where: { externalId },
+    });
+    return product.id;
+  }
+
   async import(dto: ImportProductDTO) {
     const [product, created] = await this.productRepository.findOrCreate({
       where: { externalId: dto.externalId },
@@ -32,9 +40,25 @@ export class ProductsService {
       if (product.dataValues.title !== dto.title) product.title = dto.title;
       if (product.dataValues.categoryId !== dto.categoryId)
         product.categoryId = dto.categoryId;
+
+      product.mustBeRemoved = false;
+
       product.save();
     }
 
     return product;
+  }
+
+  async markForDeletion(source: SOURCE_CODE) {
+    await this.productRepository.update(
+      { mustBeRemoved: true },
+      { where: { source } },
+    );
+  }
+
+  async deleteRows() {
+    await this.productRepository.destroy({
+      where: { mustBeRemoved: true },
+    });
   }
 }

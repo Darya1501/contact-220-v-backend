@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
+import { SOURCE_CODE } from 'src/utils/constants';
 import { CreateProductVariantDTO } from './dto/create-product-variant.dto';
 import { ImportProductVariantDTO } from './dto/import-product-variant.dto';
 import { ProductVariant } from './product-variants.model';
@@ -26,11 +27,33 @@ export class ProductVariantsService {
 
     if (!created) {
       if (product.dataValues.title !== dto.title) product.title = dto.title;
-      // if (product.dataValues.categoryId !== dto.categoryId)
-      //   product.categoryId = dto.categoryId;
+      if (product.dataValues.price !== dto.price) product.price = dto.price;
+      if (product.dataValues.image !== dto.image) product.image = dto.image;
+      if (product.dataValues.count !== dto.count) product.count = dto.count;
+
+      if (product.dataValues.description !== dto.description)
+        product.description = dto.description;
+      if (product.dataValues.productId !== dto.productId)
+        product.productId = dto.productId;
+
+      product.mustBeRemoved = false;
+
       product.save();
     }
 
     return product;
+  }
+
+  async markForDeletion(source: SOURCE_CODE) {
+    await this.productVariantRepository.update(
+      { mustBeRemoved: true },
+      { where: { source } },
+    );
+  }
+
+  async deleteRows() {
+    await this.productVariantRepository.destroy({
+      where: { mustBeRemoved: true },
+    });
   }
 }

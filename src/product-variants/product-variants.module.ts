@@ -8,5 +8,6 @@ import { ProductVariant } from './product-variants.model';
   providers: [ProductVariantsService],
   controllers: [ProductVariantsController],
   imports: [SequelizeModule.forFeature([ProductVariant])],
+  exports: [ProductVariantsService],
 })
 export class ProductVariantsModule {}

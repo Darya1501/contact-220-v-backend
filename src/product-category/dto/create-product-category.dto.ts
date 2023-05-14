@@ -8,5 +8,5 @@ export class CreateProductCategoryDTO {
   readonly title: string;
 
   @ApiProperty({ example: 1, description: 'ID родительской категории' })
-  readonly parentId: number | null;
+  readonly parentId: number;
 }

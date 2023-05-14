@@ -15,16 +15,16 @@ export class ImportProductVariantDTO {
     example: '/images/123.jpg',
     description: 'Ссылка на изображение',
   })
-  readonly image: string | null;
+  readonly image: string;
 
   @ApiProperty({
     example: 'Some string...',
     description: 'Описание товара',
   })
-  readonly description: string | null;
+  readonly description: string;
 
   @ApiProperty({ example: 15, description: 'Количество товара на складе' })
-  readonly count: number | null;
+  readonly count: number;
 
   @ApiProperty({ example: 1, description: 'ID товара' })
   readonly productId: number;

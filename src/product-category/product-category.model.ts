@@ -41,7 +41,7 @@ export class ProductCategory extends Model<
   @ApiProperty({ example: 1, description: 'ID родительской категории' })
   @Column({ type: DataType.INTEGER })
   @ForeignKey(() => ProductCategory)
-  parentId: number;
+  parentId: number | null;
 
   @ApiProperty({
     example: 1,

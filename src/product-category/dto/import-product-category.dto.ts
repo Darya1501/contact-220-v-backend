@@ -9,7 +9,7 @@ export class ImportProductCategoryDTO {
   readonly title: string;
 
   @ApiProperty({ example: 1, description: 'Id родительской категории' })
-  readonly parentId: number | null;
+  readonly parentId: number;
 
   @ApiProperty({
     example: '1',

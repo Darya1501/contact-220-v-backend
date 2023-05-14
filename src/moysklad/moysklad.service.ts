@@ -1,3 +1,4 @@
+import { ProductVariantsService } from './../product-variants/product-variants.service';
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
@@ -15,6 +16,7 @@ export class MoyskladService {
     private readonly httpService: HttpService,
     private productCategoryService: ProductCategoryService,
     private productsService: ProductsService,
+    private productVariantsService: ProductVariantsService,
   ) {}
 
   async getFolder(id: string, isProduct: boolean) {
@@ -74,9 +76,10 @@ export class MoyskladService {
     }
   }
 
-  // @Cron('55 * * * * *')
+  // @Cron('35 * * * * *')
   async getAssortment() {
     console.log('cron working');
+
     const {
       data: { rows },
     } = await firstValueFrom(
@@ -99,20 +102,49 @@ export class MoyskladService {
         ),
     );
 
-    const variants = [];
+    await this.productVariantsService.deleteRows();
+    await this.productsService.deleteRows();
+    await this.productCategoryService.deleteRows();
+
+    await this.productCategoryService.markForDeletion(SOURCE_CODE.MOYSKLAD);
+    await this.productsService.markForDeletion(SOURCE_CODE.MOYSKLAD);
+    await this.productVariantsService.markForDeletion(SOURCE_CODE.MOYSKLAD);
+
     const products = [];
+    const productPromises = [];
 
     rows.forEach(async (element: NomenclatureItem) => {
-      variants.push(element.name);
       const productId = element.productFolder.meta.href.split('/').reverse()[0];
 
       if (!products.find((product) => product === productId)) {
         products.push(productId);
-        const createdProductId = await this.getFolder(productId, true);
-        console.log('createdProductId: ', createdProductId);
+        productPromises.push(this.getFolder(productId, true));
+        await sleep(1000);
       }
+    });
 
-      await sleep(1000);
+    Promise.all(productPromises).then(() => {
+      rows.forEach(async (element: NomenclatureItem) => {
+        const productId = element.productFolder.meta.href
+          .split('/')
+          .reverse()[0];
+
+        this.productsService
+          .findByExternalId(productId)
+          .then(async (existingProductId) => {
+            await this.productVariantsService.import({
+              article: element.article,
+              title: element.name,
+              price: element.salePrices[0].value,
+              description: element.description,
+              count: element.quantity,
+              productId: existingProductId,
+              externalId: element.id,
+              image: null,
+              source: SOURCE_CODE.MOYSKLAD,
+            });
+          });
+      });
     });
   }
 }
