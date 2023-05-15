@@ -21,7 +21,7 @@ export interface NomenclatureItem {
   effectiveVatEnabled: boolean;
   useParentVat: boolean;
   uom: any; // единицы измерения
-  images: any; // TODO: заменить тип
+  images: { meta: { href: string; size: number } };
   minPrice: { value: number };
   salePrices: { value: number }[];
   buyPrice: { value: number };
@@ -57,6 +57,14 @@ export interface MoyskladFolder {
   effectiveVat: number;
   effectiveVatEnabled: boolean;
   useParentVat: boolean;
+}
+
+export interface MoyskladImage {
+  meta: { downloadHref: string; href: string };
+  title: string;
+  filename: string;
+  size: number;
+  updated: string;
 }
 
 export interface MoyskladResponse {

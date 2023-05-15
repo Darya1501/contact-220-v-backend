@@ -12,12 +12,6 @@ export class ImportProductVariantDTO {
   readonly price: number;
 
   @ApiProperty({
-    example: '/images/123.jpg',
-    description: 'Ссылка на изображение',
-  })
-  readonly image: string;
-
-  @ApiProperty({
     example: 'Some string...',
     description: 'Описание товара',
   })

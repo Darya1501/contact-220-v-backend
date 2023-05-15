@@ -15,6 +15,7 @@ import { ProductVariantsModule } from './product-variants/product-variants.modul
 import { ProductVariant } from './product-variants/product-variants.model';
 import { ScheduleModule } from '@nestjs/schedule';
 import { MoyskladModule } from './moysklad/moysklad.module';
+import { FilesModule } from './files/files.module';
 
 @Module({
   controllers: [],
@@ -49,6 +50,7 @@ import { MoyskladModule } from './moysklad/moysklad.module';
     ServicesModule,
     ProductVariantsModule,
     MoyskladModule,
+    FilesModule,
   ],
 })
 export class AppModule {}

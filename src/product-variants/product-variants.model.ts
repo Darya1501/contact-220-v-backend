@@ -33,7 +33,6 @@ export class ProductVariant extends Model<
   @ApiProperty({ example: '2206125', description: 'Артикул товара' })
   @Column({
     type: DataType.STRING,
-    allowNull: false,
     unique: true,
   })
   article: string;
@@ -60,6 +59,15 @@ export class ProductVariant extends Model<
     type: DataType.STRING,
   })
   image: string;
+
+  @ApiProperty({
+    example: '1',
+    description: 'ID картинки на внешнем сервисе',
+  })
+  @Column({
+    type: DataType.STRING,
+  })
+  externalImage: string;
 
   @ApiProperty({ example: 'Some string...', description: 'Описание товара' })
   @Column({
