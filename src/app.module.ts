@@ -16,6 +16,8 @@ import { ProductVariant } from './product-variants/product-variants.model';
 import { ScheduleModule } from '@nestjs/schedule';
 import { MoyskladModule } from './moysklad/moysklad.module';
 import { FilesModule } from './files/files.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import * as path from 'path';
 
 @Module({
   controllers: [],
@@ -24,6 +26,9 @@ import { FilesModule } from './files/files.module';
     ScheduleModule.forRoot(),
     ConfigModule.forRoot({
       envFilePath: `.${process.env.NODE_ENV}.env`,
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: path.resolve(__dirname, 'static'),
     }),
     SequelizeModule.forRoot({
       dialect: 'postgres',

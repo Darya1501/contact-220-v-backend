@@ -121,7 +121,7 @@ export class MoyskladService {
     await this.productVariantsService.markForDeletion(SOURCE_CODE.MOYSKLAD);
   }
 
-  // @Cron('05 * * * * *')
+  // @Cron('55 * * * * *')
   async getAssortment() {
     console.log('cron working');
     this.delete();
@@ -197,7 +197,7 @@ export class MoyskladService {
               await this.productVariantsService.import({
                 article: element.article,
                 title: element.name,
-                price: element.salePrices[0].value,
+                price: element.salePrices[0].value / 100,
                 description: element.description,
                 count: element.quantity,
                 productId: existingProductId,
@@ -209,6 +209,7 @@ export class MoyskladService {
       })
       .then(() => {
         this.makeRequests(imagesURLs, 15, 100);
-      });
+      })
+      .catch((error) => console.log(error));
   }
 }

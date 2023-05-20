@@ -19,7 +19,25 @@ export class ProductCategoryService {
 
   async getAll() {
     const categories = await this.productCategoryRepository.findAll();
-    return categories;
+
+    const tree = [];
+    const map = {};
+
+    categories.forEach((item) => {
+      map[item.id] = item;
+      item.dataValues.children = [];
+    });
+
+    categories.forEach((item) => {
+      if (item.parentId === null) {
+        tree.push(item);
+      } else {
+        const parent = map[item.parentId];
+        parent.dataValues.children.push(item);
+      }
+    });
+
+    return tree;
   }
 
   async import(dto: ImportProductCategoryDTO) {

@@ -67,4 +67,7 @@ export class ProductCategory extends Model<
 
   @HasMany(() => Product)
   products: Product[];
+
+  @HasMany(() => ProductCategory)
+  children: ProductCategory[];
 }
